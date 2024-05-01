@@ -11,6 +11,18 @@ module.exports = {
         const user1 = message.mentions.users.first();
         const user2 = message.mentions.users.last();
 
+        // Verifica se os usuários são iguais
+        if (user1.id === user2.id) {
+            // Se forem iguais, retorna mensagem de "amor próprio é tudo" com 100% de compatibilidade
+            const selfLoveEmbed = {
+                color: 0xf1c40f,
+                title: `🚢 Compatibilidade entre ${user1.username} e ${user2.username}`,
+                description: `💖 Amor próprio é tudo! ${user1.username} tem uma compatibilidade de 100% consigo mesmo. Se ame!`,
+                timestamp: new Date(),
+            };
+            return message.channel.send({ embed: selfLoveEmbed });
+        }
+
         // Calcula um número aleatório entre 0 e 100 como nível de compatibilidade
         const compatibilityLevel = Math.floor(Math.random() * 101);
 
@@ -28,7 +40,7 @@ module.exports = {
         const shipEmbed = {
             color: 0xf1c40f,
             title: `🚢 Compatibilidade entre ${user1.username} e ${user2.username}`,
-            description: `${messageText}`,
+            description: `${messageText} 🎉`,
             timestamp: new Date(),
         };
 
