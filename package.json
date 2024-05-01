@@ -1,0 +1,15 @@
+{
+  "name": "seu-bot",
+  "version": "1.0.0",
+  "description": "Descrição do seu bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "keep_alive": "node keep_alive.js"
+  },
+  "author": "Seu Nome",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "express": "^4.17.1"
+  }
+}
