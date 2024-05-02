@@ -7,10 +7,18 @@ module.exports = {
             return message.reply('Você precisa mencionar exatamente duas pessoas para fazer o ship!');
         }
 
+        // Obtém as duas pessoas mencionadas
+        const mentionedUsers = message.mentions.users.array();
+        const user1 = mentionedUsers[0];
+        const user2 = mentionedUsers[1];
+
+        // Verifica se as duas pessoas mencionadas são diferentes
+        if (user1 === user2) {
+            return message.reply('Amor próprio é tudo! 💔');
+        }
+
         // Calcula o nível de compatibilidade (porcentagem aleatória)
         const compatibilityPercentage = Math.floor(Math.random() * 101);
-        const { user: user1 } = message.mentions.users.first();
-        const { user: user2 } = message.mentions.users.last();
 
         // Determina a frase com base na porcentagem de compatibilidade
         let frase = '';
@@ -42,6 +50,6 @@ module.exports = {
         };
 
         // Envia o embed com as informações do "ship"
-        message.channel.send({ embed: embed });
+        message.channel.send({ embeds: [embed] });
     },
 };
