@@ -20,7 +20,7 @@ module.exports = {
                 .setColor('#0099ff');
 
             // Envia o embed com a imagem da definição da palavra
-            message.channel.send({ embeds: [embed] });
+            message.channel.send(embed);
         } catch (error) {
             console.error('Erro ao buscar definição da palavra:', error);
             message.reply('Ocorreu um erro ao buscar a definição da palavra. Por favor, tente novamente mais tarde.');
