@@ -1,50 +1,47 @@
 module.exports = {
     name: 'ship',
-    description: 'Calcula o nível de compatibilidade entre dois usuários.',
+    description: 'Avalia o nível de compatibilidade entre duas pessoas.',
     execute(message, args) {
-        // Verifica se foram fornecidos dois usuários como argumentos
-        if (args.length < 2) {
-            return message.reply('Por favor, forneça dois usuários para calcular o nível de compatibilidade.');
+        // Verifica se foram mencionadas duas pessoas
+        if (message.mentions.users.size !== 2) {
+            return message.reply('Você precisa mencionar exatamente duas pessoas para fazer o ship!');
         }
 
-        // Obtém os usuários mencionados
-        const user1 = message.mentions.users.first();
-        const user2 = message.mentions.users.last();
+        // Calcula o nível de compatibilidade (porcentagem aleatória)
+        const compatibilityPercentage = Math.floor(Math.random() * 101);
+        const { user: user1 } = message.mentions.users.first();
+        const { user: user2 } = message.mentions.users.last();
 
-        // Verifica se os usuários são iguais
-        if (user1.id === user2.id) {
-            // Se forem iguais, retorna mensagem de "amor próprio é tudo" com 100% de compatibilidade
-            const selfLoveEmbed = {
-                color: 0xf1c40f,
-                title: `🚢 Compatibilidade entre ${user1.username} e ${user2.username}`,
-                description: `💖 Amor próprio é tudo! ${user1.username} tem uma compatibilidade de 100% consigo mesmo. Se ame!`,
-                timestamp: new Date(),
-            };
-            return message.channel.send({ embed: selfLoveEmbed });
-        }
-
-        // Calcula um número aleatório entre 0 e 100 como nível de compatibilidade
-        const compatibilityLevel = Math.floor(Math.random() * 101);
-
-        // Define as mensagens com base no nível de compatibilidade
-        let messageText = '';
-        if (compatibilityLevel <= 25) {
-            messageText = `😢 Infelizmente, parece que ${user1.username} e ${user2.username} não são muito compatíveis, com apenas ${compatibilityLevel}%. Talvez seja melhor apenas amigos.`;
-        } else if (compatibilityLevel <= 75) {
-            messageText = `🤔 Hmm... Parece que ${user1.username} e ${user2.username} têm uma compatibilidade razoável, com ${compatibilityLevel}%. Quem sabe?`;
+        // Determina a frase com base na porcentagem de compatibilidade
+        let frase = '';
+        if (compatibilityPercentage <= 25) {
+            frase = 'Não tem muito futuro... 😔';
+        } else if (compatibilityPercentage <= 75) {
+            frase = 'Podem até tentar... 🤔';
         } else {
-            messageText = `😏 Ooh la la! Parece que ${user1.username} e ${user2.username} têm uma boa chance, com ${compatibilityLevel}%. Quem sabe o que o futuro reserva?`;
+            frase = 'Combinam mais que batata frita com ketchup! 😍';
         }
 
-        // Monta uma mensagem com o resultado
-        const shipEmbed = {
-            color: 0xf1c40f,
-            title: `🚢 Compatibilidade entre ${user1.username} e ${user2.username}`,
-            description: `${messageText} 🎉`,
-            timestamp: new Date(),
+        // Monta o embed com as informações do "ship"
+        const embed = {
+            color: 0xFF00AE, // Cor rosa
+            title: `💖 Ship entre ${user1.username} e ${user2.username}`,
+            description: frase,
+            fields: [
+                {
+                    name: 'Nome do Ship:',
+                    value: `${user1.username.substring(0, Math.floor(user1.username.length / 2))}${user2.username.substring(Math.floor(user2.username.length / 2))}`,
+                    inline: true,
+                },
+                {
+                    name: 'Compatibilidade:',
+                    value: `${compatibilityPercentage}%`,
+                    inline: true,
+                },
+            ],
         };
 
-        // Envia a mensagem com o resultado
-        message.channel.send({ embed: shipEmbed });
+        // Envia o embed com as informações do "ship"
+        message.channel.send({ embed: embed });
     },
 };
