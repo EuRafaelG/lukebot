@@ -49,7 +49,12 @@ module.exports = {
             ],
         };
 
-        // Envia o embed com as informações do "ship"
-        message.channel.send({ embeds: [embed] });
+        // Verifica se o embed tem conteúdo antes de enviá-lo
+        if (frase && frase.trim() !== '') {
+            // Envia o embed com as informações do "ship"
+            message.channel.send({ embeds: [embed] });
+        } else {
+            return message.reply('Não foi possível calcular a compatibilidade neste momento. Por favor, tente novamente mais tarde.');
+        }
     },
 };
